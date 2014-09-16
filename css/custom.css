@@ -1,0 +1,25 @@
+@charset "utf-8";
+/* CSS Document */
+html,body{
+height:100%;
+	width:100%;
+}
+
+body{
+		border:2px solid red;
+		text-transform:capitalize;
+		}
+
+
+#mainPage{
+		height:100%;
+	position:relative;
+	z-index:0;
+	
+width:100%;
+}
+
+
+
+
+
