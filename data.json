@@ -1,10 +1,24 @@
-{ "questions" : [
+{
+	 "questions" : [
   {
-    "question":"question-1"
+    "question_no":"1",
+    "question":"To discard all pending data changes …….",
     
+    "answer":"COMMIT",
+    "option1":"COMMIT",
+    "option2":"ROLLBACK",
+    "option3":"SAVEPOINT",
+    "option4":"LOCK"
   },
 {
-    "question":"question-2"
+    "question_no":"2",
+    "question":"he ……. Component is not present in every router.",
+    
+    "answer":"Mini-IOS",
+    "option1":"POST",
+    "option2":"Bootstrap program",
+    "option3":"DRAM",
+    "option4":"Mini-IOS"
     
   }
 ]}
