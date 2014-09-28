@@ -2,66 +2,159 @@
 <html>
     <head>
     	<script src="jquery-1.10.2.js"></script>
+        <link href="jQuery_Mobile/jquery.mobile-1.4.3.min.css" rel="stylesheet" type="text/css">
+		<script src="jQuery_Mobile/jquery.mobile-1.4.3.min.js"></script>
     
- 
     </head>
 
-		<body>
+	<body>
         
         <div data-role="page" id="page">
+		
 		  <div data-role="header">
+		  	<a href="#" data-role="button" id="back" data-icon="arrow-l">Back</a>  
 		    <h1>Header</h1>
+		    <a href="#" data-role="button" id="next" class="ui-btn ui-icon-arrow-r ui-btn-icon-right" data-icon="arrow-r">next</a>  
 	      </div>
 
 			<div data-role="content">
-            <a href="#carousel">question1</a>
-            
-    </div>
-      <div  data-role="footer">
+            <textarea readonly id="questionstpl"></textarea>
+
+            <fieldset data-role="controlgroup">
+				<legend>Options:</legend>
+   			  	<input type="radio" name="radio-choice" id="radio-choice-1" value="choice-1" />
+    		 	<label for="radio-choice-1">Cat</label>
+
+    		 	<input type="radio" name="radio-choice" id="radio-choice-2" value="choice-2"  />
+    		 	<label for="radio-choice-2">Dog</label>
+
+    		 	<input type="radio" name="radio-choice" id="radio-choice-3" value="choice-3"  />
+    		 	<label for="radio-choice-3">Hamster</label>
+
+     			<input type="radio" name="radio-choice" id="radio-choice-4" value="choice-4"  />
+     			<label for="radio-choice-4">Lizard</label>
+			</fieldset>
+
+
+         
+
+
+		</div>
+      	
+      	<div  data-role="footer">
 		    <h4>Footer</h4>
 	      </div>
 	    </div>
 
 
-          <div id="carousel"></div>
+        <div id="carousel"></div>
         
-<script id="questiontpl" type="text/template">
-	{{#questions}}
-		<div class="ui-page ui-page-theme-a" id="question{{question_no}}">
-		 <div data-role="header">
-		    <h1>Job Apptitude Test</h1>
-		  </div>
-			<p>{{question}}</p>
-		</div>
-		 
-		
-	{{/questions}}
-</script>
 
-<script type="text/javascript" src="mustache.js"></script>
 
 <script type="text/javascript">
 
-$("#carousel").focus(function() {
+var count=0;
+var obj="";
+function showData(info,count){
+	//alert(info.questions.length);
 
-	$.getJSON('data.json', function(data) {
-		var template = $('#questiontpl').html();
-		var html = Mustache.to_html(template, data);
-		$('#carousel').html(html);
-		
-	}); //getJSON
+	if(count<info.questions.length){
+		$("#questionstpl").text(info.questions[count].question);
+		$("[for='radio-choice-1']").html(info.questions[count].option1);
+		$("#radio-choice-1").attr("value",info.questions[count].option1);
+
+		$("[for='radio-choice-2']").html(info.questions[count].option2);
+		$("#radio-choice-2").attr("value",info.questions[count].option2);
+
+		$("[for='radio-choice-3']").html(info.questions[count].option3);
+		$("#radio-choice-3").attr("value",info.questions[count].option3);
+
+		$("[for='radio-choice-4']").html(info.questions[count].option4);
+		$("#radio-choice-4").attr("value",info.questions[count].option4);
 	
-}); //function
+
+	}
+}
+
+$("[type='radio']").click(function(){
+//alert every click
+//alert(99);
+var info=obj;
+		
+	if(this.value.toLowerCase()==info.questions[count].answer.toLowerCase()){
+		//if the answer is true
+		$(this).prev().css('background-color','#93FF98');
+	}
+	else
+	{
+	//if the answer is false
+	 	var clicker = $("input[type='radio']");
+		 	for(var i=0;i<=3;i++)
+		 	{
+				if(info.questions[count].answer.toLowerCase()==clicker[i].value.toLowerCase())
+				{
+					alert(clicker[i].value.toLowerCase());
+				//$(this).prev().css('background-color','red');
+				var nsib=clicker[i];
+				nsib.previousSibling.style.backgroundColor ="#93FF98"
+				console.log(nsib.previousSibling.value);
+				//nsib.style.backgroundColor ="green";
+		 		//alert(this.value+"sdsd");
+	    	//	alert(nsib);
+		 		//alert($(this).prev());
+					$(this).prev().css('background-color','#FF6F50');
+		 		}
+			}
+	// //	$("label").css('background-color','red');
+	}
+	//count++;
+});
+
+	
+
+//$("input[type='radio']").next().css('background-color','red');
+
+// $("input[type='radio']").click(function(){
+// 	var clicker = $("input[type='radio']");
+// 	//alert(clicker.length);
+// 	console.log("clicker.length");
+// 	//alert(this.value[0]);
+// });
+
+
+$("#next").click(function(){
+
+showData(obj,++count);
+
+});
+
+
+$("#back").click(function(){
+	if(count>0){
+		showData(obj,--count);
+	}else{
+	$(this).attr('href','index.html');
+	alert(count);
+	}
+});
+
+
+
 
 $(document).ready(function(){
-	var htm = $("#question1").html();
-	alert(htm);
-	
-	});
-</script>
-          <link href="jQuery_Mobile/jquery.mobile-1.4.3.min.css" rel="stylesheet" type="text/css">
-    <script src="jQuery_Mobile/jquery.mobile-1.4.3.min.js"></script>
+	$.getJSON('data.json', function(info) {
+		//css( "color", "red" );
+		obj= info;
+		showData(info,count);
+	});//getJSON
+$("[type='radio']").prop( "checked", false );
 
-     
-        </body>
+});
+
+
+
+</script>
+
+
+</body>
 </html>
