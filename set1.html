@@ -120,21 +120,46 @@ var info=obj;
 // 	console.log("clicker.length");
 // 	//alert(this.value[0]);
 // });
+//resets all the colors of the labes so they dont carry to the next JSON obj
+function resetter(){
+$("label").css('background-color','');
+//$("[type='radio']").checkboxradio("refresh");
+$("input[type='radio'][checked]").removeAttr("checked");
+$("label").removeClass("ui-radio-on").addClass('ui-first-child ui-radio-off');
+
+}
+
+
+function checkdata(){
+
+console.log(count);
+if(count>=obj.questions.length-1){
+$("#next").hide();
+}else{
+	console.log("show the button here");
+	$("#next").show();//shoes the button when the count is not max
+}
+
+}
+
 
 
 $("#next").click(function(){
-
-showData(obj,++count);
-
+		count++;//increment count to show next element
+		showData(obj,count);
+		checkdata();
+		resetter();
 });
 
 
 $("#back").click(function(){
 	if(count>0){
 		showData(obj,--count);
+		checkdata();
+		resetter();
 	}else{
 	$(this).attr('href','index.html');
-	alert(count);
+	//alert(count);
 	}
 });
 
